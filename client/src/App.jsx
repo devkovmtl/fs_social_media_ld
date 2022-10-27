@@ -1,9 +1,46 @@
-import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  Outlet,
+} from "react-router-dom";
+import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Profile from "./pages/profile/Profile";
+import LeftBar from "./components/leftBar/LeftBar";
+import RightBar from "./components/rightBar/RightBar";
+import NavBar from "./components/navbar/NavBar";
 
 const App = () => {
+  const Layout = () => {
+    return (
+      <div>
+        <NavBar />
+        <div style={{ display: "flex" }}>
+          <LeftBar />
+          <Outlet />
+          <RightBar />
+        </div>
+      </div>
+    );
+  };
+
   const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/profile/:id",
+          element: <Profile />,
+        },
+      ],
+    },
     {
       path: "/login",
       element: <Login />,
