@@ -1,0 +1,8 @@
+@import "../../styles.scss";
+
+.home {
+  @include themify($theme) {
+    background-color: themed("bgSoft");
+    padding: 20px 70px;
+  }
+}
