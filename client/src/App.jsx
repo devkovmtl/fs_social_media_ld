@@ -14,7 +14,7 @@ import RightBar from "./components/rightBar/RightBar";
 import NavBar from "./components/navbar/NavBar";
 
 const App = () => {
-  const currentUser = false;
+  const currentUser = true;
   const Layout = () => {
     return (
       <div>
