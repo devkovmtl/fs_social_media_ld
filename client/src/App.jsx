@@ -14,10 +14,11 @@ import RightBar from "./components/rightBar/RightBar";
 import NavBar from "./components/navbar/NavBar";
 import "./styles.scss";
 import { DarkModeContext } from "./context/darkModeContext";
+import { AuthContext } from "./context/authContext";
 
 const App = () => {
   const { darkMode } = useContext(DarkModeContext);
-  const currentUser = true;
+  const { currentUser } = useContext(AuthContext);
 
   const Layout = () => {
     return (
