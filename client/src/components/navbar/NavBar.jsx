@@ -10,11 +10,11 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import "./navbar.scss";
 import { DarkModeContext } from "../../context/darkModeContext";
-import { AuthContextProvider } from "../../context/authContext";
+import { AuthContext } from "../../context/authContext";
 
 const NavBar = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
-  const { currentUser } = useContext(AuthContextProvider);
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <div className="navbar">
@@ -40,10 +40,7 @@ const NavBar = () => {
         <EmailOutlinedIcon />
         <NotificationsOutlinedIcon />
         <div className="user">
-          <img
-            src="https://media.istockphoto.com/photos/portrait-of-smiling-bearded-businessman-3d-illustration-of-cartoon-picture-id1222755058?b=1&k=20&m=1222755058&s=612x612&w=0&h=J8yMsCnBtUoW0XcF0rE-KVGrI5YWJOjIbMx5Adb9Uwk="
-            alt=""
-          />
+          <img src={currentUser.profilePic} alt={currentUser.name} />
           <span>{currentUser.name}</span>
         </div>
       </div>
