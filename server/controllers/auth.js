@@ -1,5 +1,10 @@
+import dotenv from "dotenv";
+dotenv.config();
 import bcrypt from "bcryptjs";
+import jsonwebtoken from "jsonwebtoken";
 import { db } from "../connect.js";
+
+const { JWT_SECRET } = process.env;
 
 export const register = (req, res, next) => {
   // Username Email Password Name
@@ -86,10 +91,21 @@ export const login = (req, res, next) => {
         .json({ success: false, msg: "Invalid credentials" });
     }
 
-    return res.json({
-      success: true,
-      msg: "Login successfully",
-    });
+    // create jwb
+    const token = jsonwebtoken.sign({ id: data[0].id }, JWT_SECRET);
+
+    // dont send the password
+    const { password: pwd, ...others } = data[0];
+
+    return res
+      .cookie("accessToken", token, {
+        httpOnly: true,
+      })
+      .json({
+        success: true,
+        msg: "Login successfully",
+        data: others,
+      });
   });
 };
 
