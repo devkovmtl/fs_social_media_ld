@@ -53,9 +53,43 @@ export const register = (req, res, next) => {
 };
 
 export const login = (req, res, next) => {
-  res.json({
-    success: true,
-    data: "Login",
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.json({
+      success: false,
+      data: "Every fields are required",
+    });
+  }
+  const q = "SELECT * FROM users WHERE username = ?";
+
+  db.query(q, [username], (err, data) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        data: "Server Error",
+      });
+    }
+    // check user exist
+    if (data.length === 0) {
+      return res.status(401).json({
+        success: false,
+        data: "Invalid credentials",
+      });
+    }
+
+    // check password
+    const checkPassword = bcrypt.compareSync(password, data[0].password);
+
+    if (!checkPassword) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "Invalid credentials" });
+    }
+
+    return res.json({
+      success: true,
+      msg: "Login successfully",
+    });
   });
 };
 
