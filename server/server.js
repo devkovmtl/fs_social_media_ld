@@ -10,7 +10,7 @@ import likeRoutes from "./routes/likes.js";
 import commentRoutes from "./routes/comments.js";
 
 // env variables
-const { PORT, DB_HOST, DB_NAME, DB_USER, DB_PASSWORD } = process.env;
+const { PORT } = process.env;
 
 // app initialization
 const app = express();
