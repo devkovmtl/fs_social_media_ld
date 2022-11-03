@@ -18,7 +18,15 @@ const { PORT } = process.env;
 const app = express();
 
 // middleware
-app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
+app.use(
+  cors({
+    origin: "http://127.0.0.1:5173",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -29,4 +37,4 @@ app.use("/api/v1/posts", postRoutes);
 app.use("/api/v1/likes", likeRoutes);
 app.use("/api/v1/comments", commentRoutes);
 
-app.listen(PORT, console.log(`http://localhost:${PORT}`));
+app.listen(PORT, "0.0.0.0", console.log(`http://localhost:${PORT}`));

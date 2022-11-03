@@ -88,7 +88,7 @@ export const login = (req, res, next) => {
     if (!checkPassword) {
       return res
         .status(400)
-        .json({ success: false, msg: "Invalid credentials" });
+        .json({ success: false, data: "Invalid credentials" });
     }
 
     // create jwb
