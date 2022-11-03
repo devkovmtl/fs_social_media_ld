@@ -5,6 +5,8 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -19,6 +21,7 @@ import { AuthContext } from "./context/authContext";
 const App = () => {
   const { darkMode } = useContext(DarkModeContext);
   const { currentUser } = useContext(AuthContext);
+  const queryClient = new QueryClient();
 
   const Layout = () => {
     return (
@@ -73,7 +76,9 @@ const App = () => {
   ]);
   return (
     <div>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </div>
   );
 };
