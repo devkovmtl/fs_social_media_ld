@@ -60,7 +60,7 @@ export const register = (req, res, next) => {
 export const login = (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
-    return res.json({
+    return res.status(401).json({
       success: false,
       data: "Every fields are required",
     });
@@ -98,12 +98,12 @@ export const login = (req, res, next) => {
     const { password: pwd, ...others } = data[0];
 
     return res
+      .status(200)
       .cookie("accessToken", token, {
         httpOnly: true,
       })
       .json({
         success: true,
-        msg: "Login successfully",
         data: others,
       });
   });
