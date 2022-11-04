@@ -72,7 +72,6 @@ export const addPost = (req, res, next) => {
 
     db.query(q, values, (err, data) => {
       if (err) {
-        console.log(err);
         return res.status(500).json({
           success: false,
           data: "Server Error",
@@ -83,6 +82,48 @@ export const addPost = (req, res, next) => {
         success: true,
         data: "Post has been created",
       });
+    });
+  });
+};
+
+export const deletePost = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      data: "Not logged in",
+    });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, userInfo) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        data: "Server Error",
+      });
+    }
+
+    const q = "DELETE FROM posts WHERE `id` = ? and `userId` = ?";
+
+    db.query(q, [req.params.id, userInfo.id], (err, data) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          data: "Server Error",
+        });
+      }
+
+      if (data.affectedRows > 0) {
+        return res.status(200).json({
+          success: true,
+          data: "Post has been deleted",
+        });
+      } else {
+        return res.status(403).json({
+          success: false,
+          data: "You can delete only your post",
+        });
+      }
     });
   });
 };
