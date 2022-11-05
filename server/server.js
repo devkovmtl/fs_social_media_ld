@@ -37,4 +37,4 @@ app.use("/api/v1/posts", postRoutes);
 app.use("/api/v1/likes", likeRoutes);
 app.use("/api/v1/comments", commentRoutes);
 
-app.listen(PORT, "0.0.0.0", console.log(`http://localhost:${PORT}`));
+app.listen(PORT, console.log(`http://localhost:${PORT}`));

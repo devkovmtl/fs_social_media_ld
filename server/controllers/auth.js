@@ -110,8 +110,11 @@ export const login = (req, res, next) => {
 };
 
 export const logout = (req, res, next) => {
-  res.clearCookie("accessToken", { secure: true, sameSite: "none" }).json({
-    success: true,
-    data: "User has been logged out",
-  });
+  return res
+    .status(200)
+    .clearCookie("accessToken", { secure: true, sameSite: "none" })
+    .json({
+      success: true,
+      data: "User has been logged out",
+    });
 };
