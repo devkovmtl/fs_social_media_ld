@@ -14,10 +14,14 @@ export const AuthContextProvider = ({ children }) => {
         "http://localhost:8080/api/v1/auth/login",
         inputs,
         {
+          headers: {
+            "Content-Type": "application/json",
+          },
           withCredentials: true,
         }
       );
       setCurrentUser(res.data.data);
+      return true;
     } catch (error) {
       throw new Error(`${error?.response?.data?.data || "Error login"}`);
     }

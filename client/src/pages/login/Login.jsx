@@ -20,7 +20,8 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(inputs);
-      navigate("/", { replace: true });
+      console.log("Login success");
+      return navigate("/");
     } catch (error) {
       setErr(error.message);
     }

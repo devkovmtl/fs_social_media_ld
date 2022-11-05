@@ -6,7 +6,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-const queryClient = new QueryClient();
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -39,8 +38,8 @@ const App = () => {
   };
 
   const ProtectedRoute = ({ children }) => {
-    if (!currentUser.id) {
-      return <Navigate to="/login/" />;
+    if (!currentUser) {
+      return <Navigate to="/login" />;
     }
 
     return children;
