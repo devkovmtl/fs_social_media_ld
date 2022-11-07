@@ -63,3 +63,42 @@ export const addComment = (req, res) => {
     });
   });
 };
+
+export const deleteComment = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) {
+    return res.status(401).json({ success: false, data: "Not logged in!" });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, userInfo) => {
+    if (err) {
+      return res.status(403).json({
+        success: false,
+        data: "Token is not valid!",
+      });
+    }
+
+    const commentId = req.params.id;
+    const q = "DELETE FROM comments WHERE `id` = ? AND `userId` = ?";
+
+    db.query(q, [commentId, userInfo.id], (err, data) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          data: "Server error",
+        });
+      }
+      if (data.affectedRows > 0) {
+        return res.status(200).json({
+          success: true,
+          data: "Comment has been deleted",
+        });
+      } else {
+        return res.status(403).json({
+          success: false,
+          data: "You can delete only your comments",
+        });
+      }
+    });
+  });
+};
