@@ -56,3 +56,42 @@ export const addLike = (req, res) => {
     });
   });
 };
+
+export const deleteLike = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) {
+    return res.status(401).json("Not Logged In!");
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, userInfo) => {
+    if (err) {
+      return res.status(403).json({
+        success: false,
+        data: "Token is not valid",
+      });
+    }
+
+    const q = "DELETE FROM likes WHERE `userId` = ? AND `postId` = ? ";
+
+    db.query(q, [userInfo.id, req.query.postId], (err, data) => {
+      console.log(err);
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          data: "Server error",
+        });
+      }
+      if (data.affectedRows > 0) {
+        return res.json({
+          success: true,
+          data: "Likes has been deleted!",
+        });
+      } else {
+        return res.status(403).json({
+          success: false,
+          data: "You can delete only your likes!",
+        });
+      }
+    });
+  });
+};
