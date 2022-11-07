@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { getLike } from "../controllers/likes.js";
+import { getLikes } from "../controllers/likes.js";
+
 const router = Router();
 
-router.get("/", getLike);
+router.get("/", getLikes);
 
 export default router;
