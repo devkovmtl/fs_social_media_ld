@@ -152,3 +152,5 @@ const Update = ({ setOpenUpdate, user }) => {
     </div>
   );
 };
+
+export default Update;
